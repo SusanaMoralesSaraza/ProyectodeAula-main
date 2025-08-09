@@ -1,0 +1,19 @@
+from monto import conversion_tasa_anual
+
+# Leer entradas del usuario
+
+monto_credito = int(input("Ingrese el monto del credito: "))
+duracion_periodo_meses = int(input("Ingrese la duracion del periodo en meses: "))
+tasa_interes_anual = int(input("Ingrese la tasa de interes anual en porcentaje: "))
+plazo_amortizacion = int(input("Ingrese el plazo de amortizacion en meses: ")) 
+
+# realizar el proceso de conversion
+
+tasa_mensual, valor_a_pagar, cuota_mensual_10_años, total = conversion_tasa_anual(
+    monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion
+)
+
+print("Tasa mensual:", round(tasa_mensual, 2))
+print("Valor a pagar:", round(valor_a_pagar, 2))
+print("Cuota mensual en 10 años:", round(cuota_mensual_10_años, 2))
+print("Total a pagar:", round(total, 2))
