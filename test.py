@@ -1,4 +1,6 @@
-from monto import conversion_tasa_anual
+from monto import conversion_tasa_anual, calcular_valor_a_pagar
+
+import monto
 
 import unittest
 
@@ -71,6 +73,21 @@ class pruebas_credito(unittest.TestCase):
         _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
         self.assertEqual(round(total, 2), 52679533.67)
 
+    def test_error_monto( self ):
+        #Entradas
+        monto_credito = 0
+        duracion_periodo_meses = 60
+        tasa_interes_anual = 15
+        plazo_amortizacion = 180
+
+        #Proceso 
+        with self.assertRaises(monto.ErrorMonto):
+            monto.calcular_valor_a_pagar(monto_credito, tasa_interes_anual, plazo_amortizacion)
+        
+
+
+if __name__ == '__main__':
+    unittest.main()
 
 if __name__ == '__main__':
     unittest.main()
