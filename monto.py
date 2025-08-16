@@ -8,6 +8,8 @@ class ErrorDemasiadasCuotas(Exception):
     """Error solo se tiene un plazo de 10 a 15 años para el crédito."""
 
 def calcular_tasa_mensual(tasa_interes_anual):
+    if tasa_interes_anual <= 0:
+        raise ValueError("La tasa de interés debe ser mayor a cero.")
     return tasa_interes_anual / 100 / 12
 
 def calcular_valor_a_pagar(monto_credito, tasa_interes_anual, duracion_periodo_meses, plazo_amortizacion):

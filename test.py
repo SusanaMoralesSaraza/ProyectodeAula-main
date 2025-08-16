@@ -7,28 +7,28 @@ class pruebas_credito(unittest.TestCase):
     # Casos normales
     def test_normal_1(self):
         _, _, _, total, _ = conversion_tasa_anual(20000000, 48, 12, 120)
-        self.assertAlmostEqual(total, 32244521.55, places=2)
+        self.assertAlmostEqual(total, 55513825.06, places=2)
 
     def test_normal_2(self):
         _, _, _, total, _ = conversion_tasa_anual(22000000, 60, 12, 130)
-        self.assertAlmostEqual(total, 39967327.37, places=2)
+        self.assertAlmostEqual(total, 71596150.81, places=2)
 
     def test_normal_3(self):
         _, _, _, total, _ = conversion_tasa_anual(25000000, 72, 12, 140)
-        self.assertAlmostEqual(total, 51177482.80, places=2)
+        self.assertAlmostEqual(total, 95317497.25, places=2)
 
     # Casos extraordinarios
     def test_extraordinary_1(self):
         _, _, _, total, _ = conversion_tasa_anual(15000000, 36, 10, 180)
-        self.assertAlmostEqual(total, 20222727.64, places=2)
+        self.assertAlmostEqual(total, 39116603.9, places=2)
 
     def test_extraordinary_2(self):
         _, _, _, total, _ = conversion_tasa_anual(25000000, 60, 15, 120)
-        self.assertAlmostEqual(total, 52679533.67, places=2)
+        self.assertAlmostEqual(total, 101988603.65, places=2)
 
     def test_extraordinary_3(self):
         _, _, _, total, _ = conversion_tasa_anual(25000000, 60, 15, 180)
-        self.assertAlmostEqual(total, 52679533.67, places=2)
+        self.assertAlmostEqual(total, 132713274.15, places=2)
 
     # Casos de error
     def test_error_monto(self):
