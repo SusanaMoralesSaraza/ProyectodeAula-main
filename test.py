@@ -1,110 +1,55 @@
 from monto import conversion_tasa_anual, calcular_valor_a_pagar
-
 import monto
-
 import unittest
-
 
 class pruebas_credito(unittest.TestCase):
 
+    # Casos normales
     def test_normal_1(self):
-        #entradas
-        monto_credito = 20000000
-        duracion_periodo_meses = 48
-        tasa_interes_anual = 12
-        plazo_amortizacion = 120
-
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
-        self.assertEqual(round(total, 2), 32244521.55)
+        _, _, _, total, _ = conversion_tasa_anual(20000000, 48, 12, 120)
+        self.assertAlmostEqual(total, 32244521.55, places=2)
 
     def test_normal_2(self):
-        #entradas
-        monto_credito = 22000000
-        duracion_periodo_meses = 60
-        tasa_interes_anual = 12
-        plazo_amortizacion = 130
-
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)    
-        self.assertEqual(round(total, 2), 39967327.37)
+        _, _, _, total, _ = conversion_tasa_anual(22000000, 60, 12, 130)
+        self.assertAlmostEqual(total, 39967327.37, places=2)
 
     def test_normal_3(self):
-        #entradas
-        monto_credito = 25000000
-        duracion_periodo_meses = 72
-        tasa_interes_anual = 12
-        plazo_amortizacion = 140
+        _, _, _, total, _ = conversion_tasa_anual(25000000, 72, 12, 140)
+        self.assertAlmostEqual(total, 51177482.80, places=2)
 
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
-        self.assertEqual(round(total, 2), 51177482.8)
-
+    # Casos extraordinarios
     def test_extraordinary_1(self):
-        #entradas
-        monto_credito = 15000000
-        duracion_periodo_meses = 36
-        tasa_interes_anual = 10
-        plazo_amortizacion = 180
-
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
-        self.assertEqual(round(total, 2), 20222727.64)
+        _, _, _, total, _ = conversion_tasa_anual(15000000, 36, 10, 180)
+        self.assertAlmostEqual(total, 20222727.64, places=2)
 
     def test_extraordinary_2(self):
-        #entradas
-        monto_credito = 25000000
-        duracion_periodo_meses = 60
-        tasa_interes_anual = 15
-        plazo_amortizacion = 120
-
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
-        self.assertEqual(round(total, 2), 52679533.67)
+        _, _, _, total, _ = conversion_tasa_anual(25000000, 60, 15, 120)
+        self.assertAlmostEqual(total, 52679533.67, places=2)
 
     def test_extraordinary_3(self):
-        #entradas
-        monto_credito = 25000000
-        duracion_periodo_meses = 60
-        tasa_interes_anual = 15
-        plazo_amortizacion = 180
+        _, _, _, total, _ = conversion_tasa_anual(25000000, 60, 15, 180)
+        self.assertAlmostEqual(total, 52679533.67, places=2)
 
-        #probar proceso de conversion
-        _, _, _, total = conversion_tasa_anual(monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
-        self.assertEqual(round(total, 2), 52679533.67)
-
+    # Casos de error
     def test_error_monto(self):
-        #Entradas
-        monto_credito = 0
-        duracion_periodo_meses = 60
-        tasa_interes_anual = 15
-        plazo_amortizacion = 180
-
-        #Proceso 
         with self.assertRaises(monto.ErrorMonto):
-            monto.calcular_valor_a_pagar(monto_credito, tasa_interes_anual, duracion_periodo_meses, plazo_amortizacion)
+            calcular_valor_a_pagar(0, 15, 60, 180)
 
     def test_error_periodo(self):
-        #Entradas
-        monto_credito = 25000000
-        duracion_periodo_meses = 0
-        tasa_interes_anual = 10
-        plazo_amortizacion = 180
-
-        #Proceso 
         with self.assertRaises(monto.ErrorPeriodoGracia):
-            monto.calcular_valor_a_pagar(monto_credito, tasa_interes_anual, duracion_periodo_meses, plazo_amortizacion)
+            calcular_valor_a_pagar(25000000, 10, 0, 180)
 
-    def test_demasiadas_cuotas(self):
-        #Entradas
-        monto_credito = 20000000
-        duracion_periodo_meses = 36
-        tasa_interes_anual = 72
-        plazo_amortizacion = 600
+    def test_error_demasiadas_cuotas(self):
+        with self.assertRaises(monto.ErrorDemasiadasCuotas):
+            calcular_valor_a_pagar(20000000, 72, 36, 600)
 
-        #Proceso 
-        with self.assertRaises(monto.ErrorPeriodoGracia):
-            monto.calcular_valor_a_pagar(monto_credito, tasa_interes_anual, duracion_periodo_meses, plazo_amortizacion)
+    def test_error_tasa_negativa(self):
+        with self.assertRaises(ValueError):
+            conversion_tasa_anual(20000000, 36, -5, 120)
+
+    def test_error_plazo_pequeno(self):
+        with self.assertRaises(monto.ErrorDemasiadasCuotas):
+            calcular_valor_a_pagar(20000000, 12, 24, 100)
+
 if __name__ == '__main__':
     unittest.main()
-
