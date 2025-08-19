@@ -1,5 +1,5 @@
 from monto import conversion_tasa_anual, calcular_valor_a_pagar
-import monto
+import monto as monto
 import unittest
 
 class pruebas_credito(unittest.TestCase):

@@ -22,6 +22,11 @@ dependiendo de la tasa de interes que le cobre la entidad del credito educativo.
 4. total_a_pagar: Valor total del crédito al finalizar.
 5. intereses_totales: Diferencia entre el total pagado y el monto original.
 
+
+# Excel
+https://docs.google.com/spreadsheets/d/1vUZCESrmqcjqwsqi9wNJCWLliLGc8mfN/edit?usp=sharing&ouid=112092804109599146567&rtpof=true&sd=true
+
+
 # Autores
 
 Susana Morales

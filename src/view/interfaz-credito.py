@@ -1,5 +1,8 @@
-from monto import conversion_tasa_anual
 import sys
+sys.path.append("src")
+
+from model import monto
+from model.monto import conversion_tasa_anual
 
 try:
     # Entradas
