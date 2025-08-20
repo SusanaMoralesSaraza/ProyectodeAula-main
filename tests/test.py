@@ -1,6 +1,11 @@
-from monto import conversion_tasa_anual, calcular_valor_a_pagar
-import monto as monto
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+
+from model import monto
+from model.monto import conversion_tasa_anual, calcular_valor_a_pagar
 import unittest
+
 
 class pruebas_credito(unittest.TestCase):
 
