@@ -22,6 +22,15 @@ dependiendo de la tasa de interes que le cobre la entidad del credito educativo.
 4. total_a_pagar: Valor total del crédito al finalizar.
 5. intereses_totales: Diferencia entre el total pagado y el monto original.
 
+# Como hacer funcionar el programa
+* Tener instalado python anteriormente en la maquina en donde se quiera ejecutar el programa.
+* Proceder a abrir la consola de la maquina y escribir el siguiente comando donde tambiens se colocara la dirección del proyecto en el cual se guardó.
+* Ejemplo: "Carpeta donde se clonó el proyecto\simulador_de_credito>py src\view\console.py"
+
+# Como ejecutar las pruebas unitarias
+
+*desde el cmd nuevamente se ejecuta el siguiente comando: "Carpeta donde se clonó el proyecto\Simulador_de_credito>py test\test.py"
+
 
 # Excel
 https://docs.google.com/spreadsheets/d/1vUZCESrmqcjqwsqi9wNJCWLliLGc8mfN/edit?usp=sharing&ouid=112092804109599146567&rtpof=true&sd=true
