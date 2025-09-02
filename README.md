@@ -25,12 +25,14 @@ dependiendo de la tasa de interes que le cobre la entidad del credito educativo.
 # Como hacer funcionar el programa
 * Tener instalado python anteriormente en la maquina en donde se quiera ejecutar el programa.
 * Proceder a abrir la consola de la maquina y escribir el siguiente comando donde tambiens se colocara la dirección del proyecto en el cual se guardó.
-* Ejemplo: "Carpeta donde se clonó el proyecto\simulador_de_credito>py src\view\console.py"
+* Ejemplo: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py src\view\console.py"
 
 # Como ejecutar las pruebas unitarias
 
-*desde el cmd nuevamente se ejecuta el siguiente comando: "Carpeta donde se clonó el proyecto\Simulador_de_credito>py test\test.py"
+*desde el cmd nuevamente se ejecuta el siguiente comando: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py test\test.py"
 
+# Como ejecutar la consola
+Desde el cmd nuevamente tenemos el siguiente prompt: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py src\view\console
 
 # Excel
 https://docs.google.com/spreadsheets/d/1vUZCESrmqcjqwsqi9wNJCWLliLGc8mfN/edit?usp=sharing&ouid=112092804109599146567&rtpof=true&sd=true
