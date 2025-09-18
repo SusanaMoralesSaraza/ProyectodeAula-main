@@ -70,6 +70,7 @@ Susana Morales
 # Autores Interfaz Gráfica y Correcciones
 
 Juan Esteban Echavarria 
+
 Mariana Henao
 
 
