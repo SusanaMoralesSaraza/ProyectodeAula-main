@@ -6,21 +6,46 @@ Calcular el valor futuro del prestamo al finalizar el periodo de gracia
 Calcular la cuota mensual durante el periodo de amortización,
 dependiendo de la tasa de interes que le cobre la entidad del credito educativo.
 
-# Proceso del proyecto
+# Proceso del Proyecto
 
-# Variables de entrada
-2. monto_credito: Valor del préstamo solicitado.
-3. duracion_periodo_meses: Tiempo de estudio (periodo de gracia en meses).
-4. tasa_interes_anual: Interés anual expresado en porcentaje.
-5. plazo_amortizacion: Número de meses para pagar el crédito después de graduarse (entre 120 y 180 meses).
+## Variables de entrada
+1. monto_credito: Valor del préstamo solicitado.
+2. duracion_periodo_meses: Tiempo de estudio (periodo de gracia en meses).
+3. tasa_interes_anual: Interés anual expresado en porcentaje.
+4. plazo_amortizacion: Número de meses para pagar el crédito después de graduarse (entre 120 y 180 meses).
 
 
-# Variables de salida
+## Variables de salida
 1. tasa_mensual: Tasa de interés mensual.
 2. valor_a_pagar: Capital ajustado después del periodo de gracia.
 3. cuota_mensual: Pago mensual del crédito.
 4. total_a_pagar: Valor total del crédito al finalizar.
 5. intereses_totales: Diferencia entre el total pagado y el monto original.
+
+# Estructura del Proyecto
+```
+SIMULADOR_CREDITO_EDUCATIVO_PROYECT_SUSANA/
+├── src/
+│ ├── __init__.py
+│ ├── model/
+│ │ ├── __init__.py
+│ │ └── monto.py # Lógica de negocio
+│ └── view/
+│ ├── __init__.py
+│ ├── interfaz_credito.py # Interfaz en consola
+│ └── interfaz_kivy.py # Interfaz gráfica con Kivy
+├── tests/
+│ ├── __init__.py
+│ └── test_monto.py # Pruebas unitarias
+└── README.md
+```
+# Requisitos
+
+Python 3.10+
+
+Se recomienda entorno virtual (venv).
+
+Dependencias: Kivy
 
 # Como hacer funcionar el programa
 * Tener instalado python anteriormente en la maquina en donde se quiera ejecutar el programa.
@@ -41,6 +66,11 @@ https://docs.google.com/spreadsheets/d/1vUZCESrmqcjqwsqi9wNJCWLliLGc8mfN/edit?us
 # Autores
 
 Susana Morales
+
+# Autores Interfaz Gráfica y Correcciones
+
+Juan Esteban Echavarria 
+Mariana Henao
 
 
 
