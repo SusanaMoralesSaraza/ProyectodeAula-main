@@ -3,11 +3,16 @@
   "python.testing.pytestEnabled": false,
   "python.testing.unittestArgs": [
     "-v",
-    "-s", "tests",          // start dir (donde están tus tests)
-    "-p", "test_*.py",      // patrón de archivos de test
-    "-t", "${workspaceFolder}"   // <-- top-level del proyecto (añade la raíz al sys.path)
+    "-s",
+    ".",
+    "-p",
+    "*test.py"
   ],
   "python.testing.cwd": "${workspaceFolder}",
   "python.envFile": "${workspaceFolder}/.env",
-  "python.analysis.extraPaths": ["${workspaceFolder}"]
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}"
+  ],
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "python-envs.pythonProjects": []
 }
