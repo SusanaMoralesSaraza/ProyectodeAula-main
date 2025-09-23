@@ -1,11 +1,15 @@
-# src/view/interfaz_credito.py
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 
-from src.model.monto import calcular_valor_futuro, calcular_cuota_mensual
+from src.model.monto import (
+    conversion_tasa_anual,
+    ErrorMonto,
+    ErrorPeriodoGracia,
+    ErrorDemasiadasCuotas,
+)
 
 class InterfazCredito(BoxLayout):
     def __init__(self, **kwargs):
@@ -31,18 +35,31 @@ class InterfazCredito(BoxLayout):
         self.add_widget(self.boton)
         self.add_widget(self.resultado)
 
-    def calcular(self, instance):
+    def calcular(self, _instance):
         try:
-            monto = float(self.monto_input.text)
-            duracion = int(self.duracion_input.text)
-            tasa = float(self.tasa_input.text)
-            plazo = int(self.plazo_input.text)
+            monto = float(self.monto_input.text.strip())
+            duracion = int(self.duracion_input.text.strip())
+            tasa_anual = float(self.tasa_input.text.strip())
+            plazo = int(self.plazo_input.text.strip())
 
-            futuro = calcular_valor_futuro(monto, tasa, duracion)
-            cuota = calcular_cuota_mensual(futuro, tasa, plazo)
+            # usa la función del modelo que ya hace TODO (valida + convierte + calcula)
+            tasa_mensual, valor_a_pagar, cuota_mensual, total, intereses = conversion_tasa_anual(
+                monto_credito=monto,
+                duracion_periodo_meses=duracion,
+                tasa_interes_anual=tasa_anual,
+                plazo_amortizacion=plazo,
+            )
 
-            self.resultado.text = f"Valor futuro: {futuro:.2f}\nCuota mensual: {cuota:.2f}"
-        except Exception as e:
+            self.resultado.text = (
+                f"Tasa mensual: {tasa_mensual*100:.4f}%\n"
+                f"Valor futuro: ${valor_a_pagar:,.2f}\n"
+                f"Cuota mensual: ${cuota_mensual:,.2f}\n"
+                f"Total a pagar: ${total:,.2f}\n"
+                f"Intereses totales: ${intereses:,.2f}"
+            )
+
+
+        except (ValueError, ErrorMonto, ErrorPeriodoGracia, ErrorDemasiadasCuotas) as e:
             self.resultado.text = f"Error: {e}"
 
 class CreditoApp(App):
@@ -50,4 +67,6 @@ class CreditoApp(App):
         return InterfazCredito()
     
 if __name__ == "__main__":
+    # Ejecuta desde la raíz del proyecto:
+    #   python -m src.view.interfaz_kivy
     CreditoApp().run()
