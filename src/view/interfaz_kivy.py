@@ -65,7 +65,7 @@ class InterfazCredito(BoxLayout):
 class CreditoApp(App):
     def build(self):
         return InterfazCredito()
-    
+
 if __name__ == "__main__":
     # Ejecuta desde la raíz del proyecto:
     #   python -m src.view.interfaz_kivy
