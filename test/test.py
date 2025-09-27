@@ -1,7 +1,5 @@
-import sys, os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-# tests/test_monto.py
+
 import unittest
 
 from src.model import monto
@@ -57,5 +55,5 @@ class PruebasCredito(unittest.TestCase):
             calcular_valor_a_pagar(20000000, 12, 24, 100)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main(verbosity=2)
