@@ -37,37 +37,20 @@ SIMULADOR_CREDITO_EDUCATIVO_PROYECT_SUSANA/
 ├── tests/
 │ ├── __init__.py
 │ └── test_monto.py # Pruebas unitarias
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 # Requisitos
 
-Python 3.10+
+Python 3.11+
 
 Se recomienda entorno virtual (venv).
-
-Dependencias: Kivy
-
-# Como hacer funcionar el programa
-* Tener instalado python anteriormente en la maquina en donde se quiera ejecutar el programa.
-* Proceder a abrir la consola de la maquina y escribir el siguiente comando donde tambiens se colocara la dirección del proyecto en el cual se guardó.
-* Ejemplo: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py src\view\console.py"
-
-# Como ejecutar las pruebas unitarias
-
-*desde el cmd nuevamente se ejecuta el siguiente comando: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py test\test.py"
-
-# Como ejecutar la consola
-Desde el cmd nuevamente tenemos el siguiente prompt: "Carpeta donde se clonó el proyecto\ProyectodeAula-main>py src\view\console
 
 # Ejecutar la Interfaz Gráfica (Kivy)
 
 ### 1. Requisitos previos
 
-Python 3.10+ instalado en tu máquina.
-
-Instalar dependencias (en un entorno virtual recomendado):
-
-pip install kivy
+Python 3.11+ instalado en tu máquina.
 
 ### 2. Clonar el repositorio y entrar al proyecto
 ```
@@ -76,6 +59,8 @@ cd ProyectoCreditoEducativo
 ```
 
 ### 3. Crear y activar entorno virtual (opcional pero recomendado)
+
+Debes crear el entorno con python 3.11+
 
 ```
 python -m venv .venv
@@ -106,7 +91,7 @@ source .venv/bin/activate
 ### 4. Instalar dependencias del proyecto
 En la terminal ejecuta este comando:
 ```
-pip install kivy
+pip install -r requirements.txt
 ```
 ### 5. Ejecutar la interfaz gráfica
 Desde la raíz del proyecto ejecuta este comando:
@@ -164,9 +149,3 @@ Susana Morales
 Juan Esteban Echavarria 
 
 Mariana Henao
-
-
-
-
-
-
