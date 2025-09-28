@@ -64,14 +64,12 @@ Debes crear el entorno con python 3.11+
 
 ```
 python -m venv .venv
-
 ```
 
 ### macOS / Linux:
 
 ```
 source .venv/bin/activate
-
 ```
 
 ### Windows (PowerShell):
@@ -79,14 +77,12 @@ source .venv/bin/activate
 
 ```
 .venv\Scripts\Activate.ps1
-
 ```
 
 ### Windows (CMD):
 
 ```
 .venv\Scripts\activate.bat
-
 ```
 ### 4. Instalar dependencias del proyecto
 En la terminal ejecuta este comando:
@@ -96,8 +92,9 @@ pip install -r requirements.txt
 ### 5. Ejecutar la interfaz gráfica
 Desde la raíz del proyecto ejecuta este comando:
 ```
-python -m src.view.interfaz_credito
+python -m src.view.interfaz_kivy
 ```
+O simplemente dale run(parte superior derecha) estando en el archivo interfaz_kivy
 ### 6. Uso
  Se abrirá una ventana de Kivy con los siguientes campos:
 
