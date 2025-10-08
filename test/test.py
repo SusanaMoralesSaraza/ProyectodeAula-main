@@ -1,14 +1,12 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from model import monto
-from model.monto import conversion_tasa_anual, calcular_valor_a_pagar
+
 import unittest
 
+from src.model import monto
+from src.model.monto import conversion_tasa_anual, calcular_valor_a_pagar
 
-class pruebas_credito(unittest.TestCase):
 
+class PruebasCredito(unittest.TestCase):
     # Casos normales
     def test_normal_1(self):
         _, _, _, total, _ = conversion_tasa_anual(20000000, 48, 12, 120)
@@ -25,7 +23,7 @@ class pruebas_credito(unittest.TestCase):
     # Casos extraordinarios
     def test_extraordinary_1(self):
         _, _, _, total, _ = conversion_tasa_anual(15000000, 36, 10, 180)
-        self.assertAlmostEqual(total, 39116603.9, places=2)
+        self.assertAlmostEqual(total, 39116603.90, places=2)
 
     def test_extraordinary_2(self):
         _, _, _, total, _ = conversion_tasa_anual(25000000, 60, 15, 120)
@@ -56,5 +54,6 @@ class pruebas_credito(unittest.TestCase):
         with self.assertRaises(monto.ErrorDemasiadasCuotas):
             calcular_valor_a_pagar(20000000, 12, 24, 100)
 
-if __name__ == '__main__':
-    unittest.main()
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

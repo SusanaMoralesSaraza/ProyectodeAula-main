@@ -1,0 +1,17 @@
+##############################
+# Requerimientos principales #
+##############################
+kivy>=2.3.0
+kivymd>=1.2.0
+
+#####################################
+# Requerimientos opcionales (build) #
+#####################################
+# Necesario solo si quieres generar un ejecutable
+pyinstaller>=6.0.0
+
+##################################
+# Utilidades recomendadas (setup) #
+##################################
+setuptools>=65.0.0
+wheel>=0.40.0
