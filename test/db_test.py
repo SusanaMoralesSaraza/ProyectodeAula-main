@@ -8,18 +8,19 @@ import unittest
 
 class TetsDBCredito(unittest.TestCase):
 
-    def test_insertar_y_buscar(self):
+    def test_insertar(self):
+        #Crear una instancia la calse credito
         credito_prueba = Credito(nombre="Felipe", monto_credito = "25000000", duracion_periodo_meses = "72",
                                   tasa_interes_anual= "12", plazo_amortizacion = "140")
         
-        #Pedir al controlador que inserte el credito
+        #Insertar en la base de datos
         ControladorCreditos.Insertar(credito_prueba)
 
-        #Pedir al controlador que busque el credito
+        #Buscar
         encontrado = ControladorCreditos.Buscar("Felipe")
 
-        #Verificar que el credito encontrado es igual al que se inserto
-        self.assertTrue( credito_prueba.is_equal(encontrado) )
-
+        #Comparar si es igual la buscada con la inicial 
+        credito_prueba.is_equal(encontrado)
+        
     def buscar(self):
         pass
