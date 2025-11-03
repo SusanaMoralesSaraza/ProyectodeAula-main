@@ -133,6 +133,22 @@ Si ingresas datos inválidos, por ejemplo:
 
  #### El sistema mostrará un mensaje de Error con la causa.
 
+ 
+### Conectar a base de datos
+
+Conecta tu base de datos desde PotgresSQL y en el archivo
+```
+secret_config.py
+```
+Ingresa los siguientes datos:
+ 
+ -PGHOST = 'PONGA EL HOST DE LA BD AQUI'
+ -PGDATABASE = 'PONGA EL NOMBRE DE LA BASE DE DATOS AQUI'
+ -PGUSER = 'PONGA EL USUARIO AQUI'
+ -PGPASSWORD  = 'PONGA LA CONTRASEÑA AQUI'
+ -PGPORT = 'PONGA EL PORT AQUI'
+
+
 # Excel
 https://docs.google.com/spreadsheets/d/1vUZCESrmqcjqwsqi9wNJCWLliLGc8mfN/edit?usp=sharing&ouid=112092804109599146567&rtpof=true&sd=true
 
