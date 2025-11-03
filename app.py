@@ -4,8 +4,19 @@ from flask import Flask
 # Para poder servir plantillas HTML desde archivos, es necesario importar el modulo render_template
 from flask import render_template, request
 
-from model.credito import Credito 
-from controlador_creditos import ControladorCreditos  
+import sys
+import os
+
+# añadir src al path usando ruta absoluta (funciona aunque ejecutes desde otro directorio)
+here = os.path.dirname(__file__)
+src_path = os.path.abspath(os.path.join(here, "src"))
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
+
+from src.model.credito import Credito
+from src.controller import ControladorCreditos
+
+
 
 # Flask constructor: crea una variable que nos servirá para comunicarle a Flask
 # la configuración que queremos para nuestra aplicación

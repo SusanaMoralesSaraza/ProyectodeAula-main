@@ -2,7 +2,7 @@ import sys
 sys.path.append("src")
 
 import psycopg2
-import secret_config 
+import secret_config
 from model.credito import Credito 
 
 

@@ -2,7 +2,7 @@ import sys
 sys.path.append("src")
 
 from model.credito import Credito
-from controlador_creditos import ControladorCreditos
+from controller import ControladorCreditos
 
 
 # Crear una instancia del Modelo

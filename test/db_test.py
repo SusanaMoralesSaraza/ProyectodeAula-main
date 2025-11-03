@@ -1,8 +1,7 @@
 import sys
 sys.path.append("src")  # Agrega el directorio padre al path para importar src
 from src.model.credito import Credito
-
-from src.controlador_creditos import ControladorCreditos
+from src.controller import ControladorCreditos
 
 import unittest
 
@@ -40,4 +39,3 @@ class TetsDBCredito(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-    
