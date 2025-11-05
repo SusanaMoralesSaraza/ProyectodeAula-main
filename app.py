@@ -1,8 +1,3 @@
-"""
-Aplicación Web Flask para Gestión de Créditos Educativos
-Sistema completo con funcionalidades CRUD y interfaz web
-"""
-
 from flask import Flask, render_template, request, redirect, url_for, flash
 import sys
 import os
