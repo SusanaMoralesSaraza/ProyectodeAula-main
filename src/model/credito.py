@@ -1,6 +1,4 @@
 class Credito:
-    """Modelo ORM para la tabla creditos"""
-    
     def __init__(self, nombre: str = None,
                  monto_credito = None,
                  duracion_periodo_meses = None,
@@ -13,7 +11,6 @@ class Credito:
         self.plazo_amortizacion = plazo_amortizacion
 
     def is_equal(self, otro: 'Credito') -> bool:
-        """Compara si dos objetos Credito son iguales"""
         if otro is None:
             return False
         return (
@@ -25,7 +22,6 @@ class Credito:
         )
     
     def __str__(self):
-        """Representación en string del crédito"""
         return f"Credito(nombre={self.nombre}, monto={self.monto_credito}, duracion={self.duracion_periodo_meses}, tasa={self.tasa_interes_anual}, plazo={self.plazo_amortizacion})"
     
     def __repr__(self):
