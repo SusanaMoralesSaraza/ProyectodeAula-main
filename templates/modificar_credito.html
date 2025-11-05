@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Modificar Crédito{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #f8f9fa;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #495057;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ced4da;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[readonly] {
+        background: #e9ecef;
+        cursor: not-allowed;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .help-text {
+        font-size: 0.85em;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    .icon-header {
+        text-align: center;
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+
+    .search-first {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+</style>
+
+<div class="form-container">
+    <div class="icon-header">✏️</div>
+    <h2 style="text-align: center; margin-bottom: 30px;">Modificar Crédito</h2>
+
+    {% if not encontrado %}
+        <!-- Formulario de búsqueda -->
+        <div class="search-first">
+            <p style="margin-bottom: 20px;">Primero busque el crédito que desea modificar</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('modificar_credito') }}">
+            <div class="form-group">
+                <label for="nombre">Nombre del Beneficiario</label>
+                <input type="text" id="nombre" name="nombre" required 
+                       placeholder="Ingrese el nombre a buscar">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="buscar" class="btn" style="flex: 1;">🔍 Buscar</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">❌ Cancelar</a>
+            </div>
+        </form>
+
+    {% else %}
+        <!-- Formulario de modificación -->
+        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: center;">
+            ✅ Crédito encontrado. Modifique los campos necesarios.
+        </div>
+
+        <form method="POST" action="{{ url_for('modificar_credito') }}">
+            <div class="form-group">
+                <label for="nombre">Nombre del Beneficiario</label>
+                <input type="text" id="nombre" name="nombre" 
+                       value="{{ credito.nombre }}" readonly>
+                <div class="help-text">El nombre no se puede modificar</div>
+            </div>
+
+            <div class="form-group">
+                <label for="monto_credito">Monto del Crédito (en pesos) *</label>
+                <input type="number" id="monto_credito" name="monto_credito" required 
+                       min="1" value="{{ credito.monto_credito }}">
+            </div>
+
+            <div class="form-group">
+                <label for="duracion_periodo_meses">Duración del Periodo (meses) *</label>
+                <input type="number" id="duracion_periodo_meses" name="duracion_periodo_meses" required 
+                       min="1" value="{{ credito.duracion_periodo_meses }}">
+            </div>
+
+            <div class="form-group">
+                <label for="tasa_interes_anual">Tasa de Interés Anual (%) *</label>
+                <input type="number" id="tasa_interes_anual" name="tasa_interes_anual" required 
+                       min="0" step="0.01" value="{{ credito.tasa_interes_anual }}">
+            </div>
+
+            <div class="form-group">
+                <label for="plazo_amortizacion">Plazo de Amortización (meses) *</label>
+                <input type="number" id="plazo_amortizacion" name="plazo_amortizacion" required 
+                       min="1" value="{{ credito.plazo_amortizacion }}">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" name="actualizar" class="btn" style="flex: 1;">💾 Guardar Cambios</button>
+                <a href="{{ url_for('modificar_credito') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">❌ Cancelar</a>
+            </div>
+        </form>
+    {% endif %}
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="{{ url_for('listar_creditos') }}">📋 Ver todos los créditos</a>
+</div>
+{% endblock %}

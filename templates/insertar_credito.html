@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Insertar Crédito{% endblock %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #f8f9fa;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #495057;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #ced4da;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .help-text {
+        font-size: 0.85em;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    .icon-header {
+        text-align: center;
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="form-container">
+    <div class="icon-header">➕</div>
+    <h2 style="text-align: center; margin-bottom: 30px;">Insertar Nuevo Crédito</h2>
+
+    <form method="POST" action="{{ url_for('insertar_credito') }}">
+        <div class="form-group">
+            <label for="nombre">Nombre del Beneficiario *</label>
+            <input type="text" id="nombre" name="nombre" required 
+                   placeholder="Ej: Juan Pérez">
+            <div class="help-text">Nombre completo del estudiante beneficiario</div>
+        </div>
+
+        <div class="form-group">
+            <label for="monto_credito">Monto del Crédito (en pesos) *</label>
+            <input type="number" id="monto_credito" name="monto_credito" required 
+                   min="1" placeholder="Ej: 25000000">
+            <div class="help-text">Monto total del crédito educativo</div>
+        </div>
+
+        <div class="form-group">
+            <label for="duracion_periodo_meses">Duración del Periodo (meses) *</label>
+            <input type="number" id="duracion_periodo_meses" name="duracion_periodo_meses" required 
+                   min="1" placeholder="Ej: 72">
+            <div class="help-text">Duración del periodo de gracia en meses</div>
+        </div>
+
+        <div class="form-group">
+            <label for="tasa_interes_anual">Tasa de Interés Anual (%) *</label>
+            <input type="number" id="tasa_interes_anual" name="tasa_interes_anual" required 
+                   min="0" step="0.01" placeholder="Ej: 12">
+            <div class="help-text">Porcentaje de interés anual del crédito</div>
+        </div>
+
+        <div class="form-group">
+            <label for="plazo_amortizacion">Plazo de Amortización (meses) *</label>
+            <input type="number" id="plazo_amortizacion" name="plazo_amortizacion" required 
+                   min="1" placeholder="Ej: 140">
+            <div class="help-text">Periodo total para pagar el crédito</div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn" style="flex: 1;">💾 Guardar Crédito</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary" style="flex: 1; text-align: center;">❌ Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="{{ url_for('listar_creditos') }}">📋 Ver todos los créditos</a>
+</div>
+{% endblock %}

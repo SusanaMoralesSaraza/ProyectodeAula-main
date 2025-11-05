@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema de Créditos{% endblock %}
+
+{% block content %}
+<style>
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .menu-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .menu-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .menu-card .icon {
+        font-size: 60px;
+        margin-bottom: 20px;
+    }
+
+    .menu-card h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .menu-card p {
+        font-size: 0.95em;
+        opacity: 0.9;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-radius: 15px;
+        color: white;
+        margin-bottom: 40px;
+    }
+
+    .hero h1 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+</style>
+
+<div class="hero">
+    <h1>¡Bienvenido!</h1>
+    <p>Sistema completo de gestión de créditos educativos</p>
+</div>
+
+<div class="menu-grid">
+    <a href="{{ url_for('listar_creditos') }}" class="menu-card">
+        <div class="icon">📋</div>
+        <h2>Ver Créditos</h2>
+        <p>Consulta todos los créditos registrados en el sistema</p>
+    </a>
+
+    <a href="{{ url_for('insertar_credito') }}" class="menu-card">
+        <div class="icon">➕</div>
+        <h2>Insertar Crédito</h2>
+        <p>Registra un nuevo crédito educativo en la base de datos</p>
+    </a>
+
+    <a href="{{ url_for('buscar_credito') }}" class="menu-card">
+        <div class="icon">🔍</div>
+        <h2>Buscar Crédito</h2>
+        <p>Encuentra un crédito específico por nombre</p>
+    </a>
+
+    <a href="{{ url_for('modificar_credito') }}" class="menu-card">
+        <div class="icon">✏️</div>
+        <h2>Modificar Crédito</h2>
+        <p>Actualiza la información de un crédito existente</p>
+    </a>
+
+    <a href="{{ url_for('crear_tablas') }}" class="menu-card">
+        <div class="icon">⚙️</div>
+        <h2>Crear Tablas</h2>
+        <p>Inicializa las tablas de la base de datos</p>
+    </a>
+</div>
+
+<div style="margin-top: 50px; text-align: center; padding: 30px; background: #f8f9fa; border-radius: 10px;">
+    <h3>📊 Características del Sistema</h3>
+    <p style="margin-top: 15px; color: #6c757d;">
+        ✅ CRUD Completo • ✅ Interfaz Web Moderna • ✅ Tests Unitarios • ✅ Base de Datos PostgreSQL
+    </p>
+</div>
+{% endblock %}

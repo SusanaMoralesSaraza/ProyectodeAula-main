@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Tablas{% endblock %}
+
+{% block content %}
+<style>
+    .setup-container {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .warning-box {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .warning-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .info-box h4 {
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+
+    .info-box ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .info-box li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-box li:last-child {
+        border-bottom: none;
+    }
+
+    .check-icon {
+        color: #28a745;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="setup-container">
+    <div class="warning-box">
+        <div class="warning-icon">⚙️</div>
+        <h2>Inicializar Base de Datos</h2>
+        <p style="color: #856404; margin-top: 15px;">
+            Esta opción creará las tablas necesarias en la base de datos. 
+            Solo es necesario ejecutar esto <strong>una vez</strong> al configurar el sistema 
+            o cuando la base de datos esté vacía.
+        </p>
+    </div>
+
+    <div class="info-box">
+        <h4>📋 Lo que se creará:</h4>
+        <ul>
+            <li><span class="check-icon">✅</span> Tabla <code>creditos</code></li>
+            <li><span class="check-icon">✅</span> Columna <code>nombre</code> (Clave Primaria)</li>
+            <li><span class="check-icon">✅</span> Columna <code>monto_credito</code></li>
+            <li><span class="check-icon">✅</span> Columna <code>duracion_periodo_meses</code></li>
+            <li><span class="check-icon">✅</span> Columna <code>tasa_interes_anual</code></li>
+            <li><span class="check-icon">✅</span> Columna <code>plazo_amortizacion</code></li>
+        </ul>
+    </div>
+
+    <div style="background: #d1ecf1; color: #0c5460; padding: 20px; border-radius: 10px; margin: 20px 0;">
+        <strong>ℹ️ Importante:</strong> Asegúrese de que la configuración en <code>secret_config.py</code> 
+        esté correcta antes de continuar.
+    </div>
+
+    <form method="POST" action="{{ url_for('crear_tablas') }}" 
+          onsubmit="return confirm('¿Está seguro de que desea crear las tablas? Esta operación es segura y no borrará datos existentes.');">
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+            <button type="submit" class="btn" style="font-size: 18px; padding: 15px 40px;">
+                ⚙️ Crear Tablas Ahora
+            </button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary" style="font-size: 18px; padding: 15px 40px;">
+                ❌ Cancelar
+            </a>
+        </div>
+    </form>
+
+    <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+        <h4>💡 Después de crear las tablas</h4>
+        <p style="color: #6c757d; margin-top: 10px;">
+            Podrá empezar a insertar créditos, buscar, modificar y eliminar registros.
+            El sistema estará completamente funcional.
+        </p>
+    </div>
+</div>
+{% endblock %}

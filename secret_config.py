@@ -1,8 +1,19 @@
-#Se ponen los datos de la conexion de la base de datos 
+"""
+ARCHIVO DE CONFIGURACIÓN DE BASE DE DATOS
+==========================================
+Este es el ÚNICO archivo que necesitas modificar para conectar a tu base de datos.
+Cambia los valores a continuación con las credenciales de tu base de datos PostgreSQL.
 
-PGHOST = 'dpg-d4401tuuk2gs739ibgc0-a.render.com' #'PONGA EL HOST DE LA BD AQUI'
-PGDATABASE = 'credit_educativo' # 'PONGA EL NOMBRE DE LA BASE DE DATOS AQUI'
-PGUSER = 'susana' #'PONGA EL USUARIO AQUI'
-PGPASSWORD  = 'NcW6icU3aJPKRgp2vYBvTEwQ8ahK58px' #'PONGA LA CONTRASEÑA AQUI'
-PGPORT = '5432' 
+IMPORTANTE: 
+- Para Render, usa el FQDN completo (ej: dpg-xxxxx.render.com)
+- Para localhost, usa: 'localhost'
+- NO subas este archivo a GitHub (está en .gitignore)
+"""
+
+# Configuración de conexión a PostgreSQL
+PGHOST = 'dpg-d4401tuuk2gs739ibgc0-a.virginia-postgres.render.com'  # Host de la base de datos (FQDN completo para servicios en la nube)
+PGDATABASE = 'credit_educativo'                    # Nombre de la base de datos
+PGUSER = 'susana'                                  # Usuario de la base de datos
+PGPASSWORD = 'NcW6icU3aJPKRgp2vYBvTEwQ8ahK58px'   # Contraseña del usuario
+PGPORT = '5432'                                    # Puerto (por defecto 5432 para PostgreSQL) 
 

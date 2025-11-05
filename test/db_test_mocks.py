@@ -1,5 +1,12 @@
+"""
+Tests con mocks - No requieren conexión a base de datos
+Estos tests pueden ejecutarse localmente sin problemas de red
+"""
+
 import sys
 import os
+import unittest
+from unittest.mock import patch, MagicMock
 
 # Añadir rutas al path
 here = os.path.dirname(__file__)
@@ -13,23 +20,29 @@ if project_root not in sys.path:
 from model.credito import Credito
 from controller.controlador_creditos import ControladorCreditos
 
-import unittest
 
+class TestDBCreditoConMocks(unittest.TestCase):
+    """Tests para operaciones CRUD usando mocks (sin conexión real a BD)"""
 
-class TestDBCredito(unittest.TestCase):
-    """Tests para operaciones CRUD en la tabla creditos"""
+    def setUp(self):
+        """Se ejecuta antes de cada test"""
+        self.patcher = patch('controller.controlador_creditos.obtener_cursor')
+        self.mock_obtener_cursor = self.patcher.start()
+        
+        # Configurar mock de cursor
+        self.mock_cursor = MagicMock()
+        self.mock_connection = MagicMock()
+        self.mock_cursor.connection = self.mock_connection
+        self.mock_obtener_cursor.return_value = self.mock_cursor
 
-    @classmethod
-    def setUpClass(cls):
-        """Test Fixture: Crear tablas antes de todos los tests"""
-        print("\n=== Creando tablas ===")
-        ControladorCreditos.crear_tablas()
+    def tearDown(self):
+        """Se ejecuta después de cada test"""
+        self.patcher.stop()
 
     # ==================== TESTS DE INSERCIÓN (INSERT) ====================
     
     def test_01_insertar_credito_exitoso(self):
         """Caso normal: Insertar crédito válido"""
-        print("\nTest: Insertar crédito - Felipe")
         credito = Credito(
             nombre="Felipe",
             monto_credito=25000000,
@@ -37,14 +50,16 @@ class TestDBCredito(unittest.TestCase):
             tasa_interes_anual=12,
             plazo_amortizacion=140
         )
+        
         ControladorCreditos.insertar(credito)
-        encontrado = ControladorCreditos.buscar_credito("Felipe")
-        self.assertIsNotNone(encontrado, "El crédito debería existir en la BD")
-        self.assertTrue(credito.is_equal(encontrado))
+        
+        # Verificar que se llamó execute con los parámetros correctos
+        self.mock_cursor.execute.assert_called_once()
+        self.mock_connection.commit.assert_called_once()
+        self.mock_connection.close.assert_called_once()
 
     def test_02_insertar_credito_exitoso_2(self):
         """Caso normal: Insertar segundo crédito válido"""
-        print("\nTest: Insertar crédito - Maria")
         credito = Credito(
             nombre="Maria",
             monto_credito=20000000,
@@ -52,14 +67,14 @@ class TestDBCredito(unittest.TestCase):
             tasa_interes_anual=12,
             plazo_amortizacion=120
         )
+        
         ControladorCreditos.insertar(credito)
-        encontrado = ControladorCreditos.buscar_credito("Maria")
-        self.assertIsNotNone(encontrado)
-        self.assertTrue(credito.is_equal(encontrado))
+        
+        self.mock_cursor.execute.assert_called_once()
+        self.mock_connection.commit.assert_called_once()
 
     def test_03_insertar_credito_exitoso_3(self):
         """Caso normal: Insertar tercer crédito válido"""
-        print("\nTest: Insertar crédito - Carlos")
         credito = Credito(
             nombre="Carlos",
             monto_credito=15000000,
@@ -67,90 +82,82 @@ class TestDBCredito(unittest.TestCase):
             tasa_interes_anual=10.5,
             plazo_amortizacion=100
         )
+        
         ControladorCreditos.insertar(credito)
-        encontrado = ControladorCreditos.buscar_credito("Carlos")
-        self.assertIsNotNone(encontrado)
-        self.assertTrue(credito.is_equal(encontrado))
+        
+        self.mock_cursor.execute.assert_called_once()
+        self.mock_connection.commit.assert_called_once()
 
-    def test_04_insertar_credito_duplicado(self):
-        """Caso de error: Insertar crédito duplicado (debe actualizar)"""
-        print("\nTest: Insertar crédito duplicado")
-        credito_original = Credito(
-            nombre="TestDuplicado",
+    def test_04_insertar_credito_con_error_bd(self):
+        """Caso de error: Simular error en la BD"""
+        import psycopg2
+        self.mock_cursor.execute.side_effect = psycopg2.Error("Error de BD")
+        
+        credito = Credito(
+            nombre="TestError",
             monto_credito=10000000,
             duracion_periodo_meses=36,
             tasa_interes_anual=8,
             plazo_amortizacion=80
         )
-        ControladorCreditos.insertar(credito_original)
         
-        # Intentar insertar con mismo nombre pero diferentes valores
-        credito_duplicado = Credito(
-            nombre="TestDuplicado",
-            monto_credito=12000000,
-            duracion_periodo_meses=48,
-            tasa_interes_anual=9,
-            plazo_amortizacion=90
-        )
-        ControladorCreditos.insertar(credito_duplicado)
-        
-        # Debe tener los valores actualizados
-        encontrado = ControladorCreditos.buscar_credito("TestDuplicado")
-        self.assertEqual(str(encontrado.monto_credito), "12000000")
+        with self.assertRaises(psycopg2.Error):
+            ControladorCreditos.insertar(credito)
 
     # ==================== TESTS DE ACTUALIZACIÓN (UPDATE) ====================
 
     def test_05_actualizar_credito_exitoso(self):
         """Caso normal: Actualizar crédito existente"""
-        print("\nTest: Actualizar crédito - Felipe")
-        credito_actualizado = Credito(
+        self.mock_cursor.rowcount = 1  # Simular que se actualizó 1 fila
+        
+        credito = Credito(
             nombre="Felipe",
             monto_credito=30000000,
             duracion_periodo_meses=84,
             tasa_interes_anual=11,
             plazo_amortizacion=150
         )
-        resultado = ControladorCreditos.actualizar(credito_actualizado)
-        self.assertTrue(resultado, "La actualización debería ser exitosa")
         
-        encontrado = ControladorCreditos.buscar_credito("Felipe")
-        self.assertEqual(str(encontrado.monto_credito), "30000000")
+        resultado = ControladorCreditos.actualizar(credito)
+        
+        self.assertTrue(resultado)
+        self.mock_cursor.execute.assert_called_once()
+        self.mock_connection.commit.assert_called_once()
 
     def test_06_actualizar_credito_exitoso_2(self):
         """Caso normal: Actualizar segundo crédito"""
-        print("\nTest: Actualizar crédito - Maria")
-        credito_actualizado = Credito(
+        self.mock_cursor.rowcount = 1
+        
+        credito = Credito(
             nombre="Maria",
             monto_credito=22000000,
             duracion_periodo_meses=66,
             tasa_interes_anual=11.5,
             plazo_amortizacion=130
         )
-        resultado = ControladorCreditos.actualizar(credito_actualizado)
-        self.assertTrue(resultado)
         
-        encontrado = ControladorCreditos.buscar_credito("Maria")
-        self.assertEqual(str(encontrado.monto_credito), "22000000")
+        resultado = ControladorCreditos.actualizar(credito)
+        self.assertTrue(resultado)
 
     def test_07_actualizar_credito_exitoso_3(self):
         """Caso normal: Actualizar tercer crédito"""
-        print("\nTest: Actualizar crédito - Carlos")
-        credito_actualizado = Credito(
+        self.mock_cursor.rowcount = 1
+        
+        credito = Credito(
             nombre="Carlos",
             monto_credito=18000000,
             duracion_periodo_meses=54,
             tasa_interes_anual=11,
             plazo_amortizacion=110
         )
-        resultado = ControladorCreditos.actualizar(credito_actualizado)
-        self.assertTrue(resultado)
         
-        encontrado = ControladorCreditos.buscar_credito("Carlos")
-        self.assertEqual(str(encontrado.monto_credito), "18000000")
+        resultado = ControladorCreditos.actualizar(credito)
+        self.assertTrue(resultado)
 
     def test_08_actualizar_credito_inexistente(self):
         """Caso de error: Actualizar crédito que no existe"""
-        print("\nTest: Actualizar crédito inexistente")
+        self.mock_cursor.rowcount = 0  # No se actualizó ninguna fila
+        
         credito = Credito(
             nombre="NoExiste",
             monto_credito=5000000,
@@ -158,76 +165,85 @@ class TestDBCredito(unittest.TestCase):
             tasa_interes_anual=7,
             plazo_amortizacion=50
         )
+        
         resultado = ControladorCreditos.actualizar(credito)
-        self.assertFalse(resultado, "No debería actualizar un crédito inexistente")
+        self.assertFalse(resultado)
 
     # ==================== TESTS DE CONSULTA (SELECT) ====================
 
     def test_09_buscar_credito_exitoso(self):
         """Caso normal: Buscar crédito existente"""
-        print("\nTest: Buscar crédito - Felipe")
+        # Simular que fetchone devuelve una fila
+        self.mock_cursor.fetchone.return_value = ("Felipe", 25000000, 72, 12, 140)
+        
         encontrado = ControladorCreditos.buscar_credito("Felipe")
+        
         self.assertIsNotNone(encontrado)
         self.assertEqual(encontrado.nombre, "Felipe")
+        self.assertEqual(encontrado.monto_credito, 25000000)
 
     def test_10_buscar_credito_exitoso_2(self):
         """Caso normal: Buscar segundo crédito existente"""
-        print("\nTest: Buscar crédito - Maria")
+        self.mock_cursor.fetchone.return_value = ("Maria", 20000000, 60, 12, 120)
+        
         encontrado = ControladorCreditos.buscar_credito("Maria")
+        
         self.assertIsNotNone(encontrado)
         self.assertEqual(encontrado.nombre, "Maria")
 
     def test_11_buscar_credito_exitoso_3(self):
         """Caso normal: Buscar tercer crédito existente"""
-        print("\nTest: Buscar crédito - Carlos")
+        self.mock_cursor.fetchone.return_value = ("Carlos", 15000000, 48, 10.5, 100)
+        
         encontrado = ControladorCreditos.buscar_credito("Carlos")
+        
         self.assertIsNotNone(encontrado)
         self.assertEqual(encontrado.nombre, "Carlos")
 
     def test_12_buscar_credito_inexistente(self):
         """Caso de error: Buscar crédito que no existe"""
-        print("\nTest: Buscar crédito inexistente")
+        self.mock_cursor.fetchone.return_value = None
+        
         encontrado = ControladorCreditos.buscar_credito("UsuarioInexistente")
-        self.assertIsNone(encontrado, "Debería retornar None para crédito inexistente")
+        
+        self.assertIsNone(encontrado)
 
     # ==================== TESTS DE ELIMINACIÓN (DELETE) ====================
 
     def test_13_eliminar_credito_exitoso(self):
         """Caso normal: Eliminar crédito existente"""
-        print("\nTest: Eliminar crédito - TestDuplicado")
-        resultado = ControladorCreditos.eliminar("TestDuplicado")
-        self.assertTrue(resultado, "La eliminación debería ser exitosa")
+        self.mock_cursor.rowcount = 1
         
-        # Verificar que ya no existe
-        encontrado = ControladorCreditos.buscar_credito("TestDuplicado")
-        self.assertIsNone(encontrado)
+        resultado = ControladorCreditos.eliminar("Felipe")
+        
+        self.assertTrue(resultado)
+        self.mock_cursor.execute.assert_called_once()
+        self.mock_connection.commit.assert_called_once()
 
     def test_14_eliminar_credito_exitoso_2(self):
         """Caso normal: Eliminar segundo crédito"""
-        print("\nTest: Eliminar crédito - Carlos")
-        resultado = ControladorCreditos.eliminar("Carlos")
-        self.assertTrue(resultado)
+        self.mock_cursor.rowcount = 1
         
-        encontrado = ControladorCreditos.buscar_credito("Carlos")
-        self.assertIsNone(encontrado)
+        resultado = ControladorCreditos.eliminar("Carlos")
+        
+        self.assertTrue(resultado)
 
     def test_15_eliminar_credito_exitoso_3(self):
         """Caso normal: Eliminar tercer crédito"""
-        print("\nTest: Eliminar crédito - Maria")
-        resultado = ControladorCreditos.eliminar("Maria")
-        self.assertTrue(resultado)
+        self.mock_cursor.rowcount = 1
         
-        encontrado = ControladorCreditos.buscar_credito("Maria")
-        self.assertIsNone(encontrado)
+        resultado = ControladorCreditos.eliminar("Maria")
+        
+        self.assertTrue(resultado)
 
     def test_16_eliminar_credito_inexistente(self):
         """Caso de error: Eliminar crédito que no existe"""
-        print("\nTest: Eliminar crédito inexistente")
+        self.mock_cursor.rowcount = 0
+        
         resultado = ControladorCreditos.eliminar("UsuarioInexistente")
-        self.assertFalse(resultado, "No debería eliminar un crédito inexistente")
+        
+        self.assertFalse(resultado)
 
 
 if __name__ == '__main__':
-    # Ejecutar tests con verbosidad
     unittest.main(verbosity=2)
-

@@ -4,7 +4,7 @@ duracion_periodo_meses,
 tasa_interes_anual,
 plazo_amortizacion
 FROM public.creditos;
-LIMIT 1000;
+
 
 INSERT INTO creditos (nombre, monto_credito, duracion_periodo_meses, tasa_interes_anual, plazo_amortizacion)
 VALUES ('Maria', 20000000, 60, 12, 120);

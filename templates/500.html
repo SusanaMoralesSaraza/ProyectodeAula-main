@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Error del servidor{% endblock %}
+
+{% block content %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .error-icon {
+        font-size: 120px;
+        margin-bottom: 30px;
+    }
+
+    .error-code {
+        font-size: 5em;
+        font-weight: bold;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <div class="error-code">500</div>
+    <h2>Error del servidor</h2>
+    <p style="color: #6c757d; margin: 20px 0;">
+        Lo sentimos, algo salió mal en el servidor. Por favor, intente nuevamente más tarde.
+    </p>
+    <div style="margin-top: 40px;">
+        <a href="{{ url_for('index') }}" class="btn">🏠 Volver al Inicio</a>
+    </div>
+</div>
+{% endblock %}
